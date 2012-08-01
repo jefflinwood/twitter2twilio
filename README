@@ -31,7 +31,7 @@ username: The twitter username
 password: The twitter password (in clear text, unfortunately)
 account_sid: Twilio account sid
 auth_token: Twilio auth token
-redis_url: Redis URL that Twi
+redis_url: Redis URL that TwilioSignup also knows about
 username_to_follow: Twitter username to follow (the one for the conference, for instance)
 
 # Usage
