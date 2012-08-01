@@ -1,46 +1,46 @@
-Tweeter Keeper is built on top of other people's work - I didn't see any reason to reinvent the wheel.
+The Twitter2Twilio ruby script is a modification of an earlier project I made called Tweeter Keeper (https://github.com/jefflinwood/Tweeter-Keeper) that was built on a lot of other people's work - I didn't see any reason to reinvent the wheel.
+
+Here's a listing of the gems used in Twitter2Twilio:
 
 TweetStream gem - reads tweets off of Twitter's streaming API and provides a Ruby block with the tweets.
 
 Twitter gem - for use with the other Twitter API's - use to get followers for a user, user's tweet timeline, etc. We can use this to backfill in the history for users we follow on the streaming side. Some methods on this will require OAuth authentication
 
-MongoDB - NoSQL database that uses BSON (similar to JSON) for inserting and retrieving data, making it easy to dump data directly from Twitter without processing. 
+Redis - key/value store used for inter-process communication with TwilioSignup (https://github.com/jefflinwood/twiliosignup) - a very simple tool that adds up incoming SMS requests to a Redis set.
 
-Mongo gem - Use the Mongo Ruby Driver directly, instead of an abstraction library
-
-Yaml gem - Used for basic configuration tasks
+Yajl-ruby gem - Used for basic configuration tasks
 
 # Install
 =============
 
-Environment - requires Ruby and MongoDB.
+Environment - requires Ruby and Redis.
 
 gem install bundle
 bundle install
 
 
+# Configuration
+==============
+
+You will need a Twilio account and a Twitter account for this to work, but the Twitter account does not need to be the same one you follow - Twitter just needs a username and password for access to the Twitter Streaming API. Each Twitter account can only be used for one connection, so you'll probably need one for dev and one for production.
+
+You'll also need a Redis URL (for instance, from Redis2Go on Heroku). I configured TwilioSignup with a free Redis2Go addon, and then copied and pasted the Redis2Go URL here.
+
+All of the configuration you need to do is in config.yaml:
+username: The twitter username
+password: The twitter password (in clear text, unfortunately)
+account_sid: Twilio account sid
+auth_token: Twilio auth token
+redis_url: Redis URL that Twi
+username_to_follow: Twitter username to follow (the one for the conference, for instance)
+
 # Usage
 ==============
 
-To run, open up config.yaml and change the USERNAME and PASSWORD to your Twitter account's username and password. 
-
 bundle exec ruby tweeter-keeper.rb
 
-Pick any tracking keywords you want, and add them to the @tracking_keywords array. 
-
-This version has support for loading in one Twitter user's friends (the Twitter users they are following) and tracking their tweets as well - change the Twitter user's id from "jefflinwood" to your own or whomever. As long as the account isn't protected, you don't need the account's password or an OAuth authentication.
-
-Open up a mongo shell and take a look at all the tweets you've collected! For sample data, I highly suggest "bieber" as a keyword.
-
-> use tweeterkeeper
-
-> db.tweets.count();
-2156
 
 # Future Plans
 ================
-Get keywords directly from a MongoDB collection
-Follow users from a MongoDB collection
-Backfill user and keyword data using the REST API when a new user or keyword gets added
-Handle errors/rate limits from the Twitter Streaming API
-Auto-recovery if the stream gets dropped/errors
+
+Let me know if you're using this for anything interesting - jlinwood@gmail.com - I coded it for the Austin on Rails BohConf Unconference, so it's a little rough around the edges, but happy to see it get more life.
