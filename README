@@ -2,13 +2,11 @@ The Twitter2Twilio ruby script is a modification of an earlier project I made ca
 
 Here's a listing of the gems used in Twitter2Twilio:
 
-TweetStream gem - reads tweets off of Twitter's streaming API and provides a Ruby block with the tweets.
+TweetStream gem (https://github.com/intridea/tweetstream/) - reads tweets off of Twitter's streaming API (https://dev.twitter.com/docs/streaming-api/concepts) and provides a Ruby block with the tweets.
 
-Twitter gem - for use with the other Twitter API's - use to get followers for a user, user's tweet timeline, etc. We can use this to backfill in the history for users we follow on the streaming side. Some methods on this will require OAuth authentication
+Redis gem (http://rubygems.org/gems/redis/) - key/value store used for inter-process communication with TwilioSignup (https://github.com/jefflinwood/twiliosignup) - a very simple tool that adds up incoming SMS requests to a Redis set.
 
-Redis - key/value store used for inter-process communication with TwilioSignup (https://github.com/jefflinwood/twiliosignup) - a very simple tool that adds up incoming SMS requests to a Redis set.
-
-Yajl-ruby gem - Used for basic configuration tasks
+Yajl-ruby gem (https://github.com/brianmario/yajl-ruby/) - Used for basic configuration tasks
 
 # Install
 =============
